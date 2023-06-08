@@ -7,6 +7,7 @@ package tugas.uas;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import tugas.uas.main;
 
 /**
  *
@@ -145,8 +146,6 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
             .addComponent(jSeparator3)
         );
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\asyah\\Downloads\\7984438 (1).png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
