@@ -1,4 +1,4 @@
-package tugas.uas;
+package tugas;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
