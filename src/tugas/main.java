@@ -312,7 +312,8 @@ public class main extends javax.swing.JFrame {
         Home = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
+        jClose2 = new javax.swing.JLabel();
+        jMinimize2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jBeranda = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
@@ -427,37 +428,35 @@ public class main extends javax.swing.JFrame {
         Home.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_sandbox_45px.png"))); // NOI18N
         jLabel4.setText("  TOKO KOMPUTER");
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 0, -1, 56));
 
-        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_close_window_30px.png"))); // NOI18N
-        jLabel27.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel27.addMouseListener(new java.awt.event.MouseAdapter() {
+        jClose2.setForeground(new java.awt.Color(255, 255, 255));
+        jClose2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jClose2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_close_window_30px.png"))); // NOI18N
+        jClose2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jClose2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel27MouseClicked(evt);
+                jClose2MouseClicked(evt);
             }
         });
+        jPanel5.add(jClose2, new org.netbeans.lib.awtextra.AbsoluteConstraints(886, 0, 54, 56));
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 477, Short.MAX_VALUE)
-                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jMinimize2.setForeground(new java.awt.Color(255, 255, 255));
+        jMinimize2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMinimize2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_minimize_window_30px.png"))); // NOI18N
+        jMinimize2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jMinimize2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMinimize2MouseClicked(evt);
+            }
+        });
+        jPanel5.add(jMinimize2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 0, 54, 56));
 
         Home.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 940, -1));
 
@@ -490,7 +489,7 @@ public class main extends javax.swing.JFrame {
 
         jPanel3.add(jBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(-8, 19, 230, -1));
 
-        Home.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 217, 1030));
+        Home.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 217, 600));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1484,10 +1483,10 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField34ActionPerformed
 
-    private void jLabel27MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel27MouseClicked
+    private void jClose2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClose2MouseClicked
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jLabel27MouseClicked
+    }//GEN-LAST:event_jClose2MouseClicked
 
     private void jBerandaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBerandaMousePressed
         // TODO add your handling code here:
@@ -1617,6 +1616,11 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jMinimize2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMinimize2MouseClicked
+        // TODO add your handling code here:
+        this.setState(1);
+    }//GEN-LAST:event_jMinimize2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1677,6 +1681,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jCancelTransaksi;
     private javax.swing.JComboBox<String> jCasingBox;
+    javax.swing.JLabel jClose2;
     private javax.swing.JComboBox<String> jCoolerBox;
     private javax.swing.JComboBox<String> jHDDBox;
     private javax.swing.JComboBox<String> jKeyboardBox;
@@ -1699,7 +1704,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -1709,6 +1713,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    javax.swing.JLabel jMinimize2;
     private javax.swing.JComboBox<String> jMonitorBox;
     private javax.swing.JComboBox<String> jMotherboardBox;
     private javax.swing.JComboBox<String> jMouseBox;
