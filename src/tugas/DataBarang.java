@@ -114,7 +114,6 @@ public class DataBarang {
         this.namaVarian = namaVarian;
     }
     
-
     public String getKode() {
         return kode;
     }
@@ -240,16 +239,4 @@ public class DataBarang {
             }
         }        
     }
-
-    public static void main(String[] args) {        
-
-    }
-    
-    public static List<BarangDto> monitors(BarangDto monitor) {
-        List<BarangDto> monitors = new ArrayList<>();
-        monitors.add(monitor);
-        return monitors;
-    }
-    
-    
 }

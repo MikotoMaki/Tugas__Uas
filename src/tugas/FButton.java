@@ -23,8 +23,8 @@ public class FButton extends JButton{
     private int strokeWidth;
 
     public FButton() {
-        fillOriginal = new Color(52, 152, 219);
-        fillOver = new Color(41, 128, 185);
+        fillOriginal = new Color(173,173,255);
+        fillOver = new Color(138,138,250);
         fillClick = new Color(211, 84, 0);
 
         fill = fillOriginal;
@@ -67,7 +67,7 @@ public class FButton extends JButton{
 
             @Override
             public void mousePressed(MouseEvent e) {
-                fill = fillClick;
+                
             }
 
         });
