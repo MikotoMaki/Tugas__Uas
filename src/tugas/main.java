@@ -103,6 +103,7 @@ public class main extends javax.swing.JFrame {
                     dialog.setVisible(true);
                     setDialog();
                     savedData.clear();
+                    
                     // Perform actions after progress completes
                 } else {
                     progress++;
@@ -221,6 +222,7 @@ public class main extends javax.swing.JFrame {
     //Fungsi ini menambahkan data yang disimpan ke dalam tabel
     public void addDataTable(){
         DefaultTableModel model = (DefaultTableModel)tableDetailProduct.getModel();
+//        model.setRowCount(0);
         for(BarangDto item: savedData){
             String[] row = new String[4];
                 row[0] = item.getName();
