@@ -592,6 +592,11 @@ public void rbEnable(boolean choice){
         jPanel3.add(jBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 60));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1889,6 +1894,10 @@ public void rbEnable(boolean choice){
             fPayButton.setEnabled(true);           
         }
     }//GEN-LAST:event_fButton5ActionPerformed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        dispose();
+    }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments
