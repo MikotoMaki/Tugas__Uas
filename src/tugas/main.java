@@ -556,7 +556,7 @@ public void rbEnable(boolean choice){
 
         topLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         topLabel.setForeground(new java.awt.Color(51, 51, 51));
-        topLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_sandbox_45px.png"))); // NOI18N
+        topLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/computer(1).png"))); // NOI18N
         topLabel.setText("  TOKO KOMPUTER");
         jPanel5.add(topLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 80));
 
@@ -758,7 +758,7 @@ public void rbEnable(boolean choice){
 
         jLabel11.setText("-------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-        namaBarang.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        namaBarang.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel13.setText("Kode Barang         :");
@@ -766,7 +766,7 @@ public void rbEnable(boolean choice){
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel28.setText("Harga Barang       :");
 
-        hargaBarang.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        hargaBarang.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         hargaBarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hargaBarangActionPerformed(evt);
@@ -775,7 +775,7 @@ public void rbEnable(boolean choice){
 
         cbVarian.setBackground(new java.awt.Color(41, 54, 63));
         cbVarian.setEditable(true);
-        cbVarian.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        cbVarian.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         cbVarian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbVarianActionPerformed(evt);
