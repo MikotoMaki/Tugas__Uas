@@ -79,9 +79,11 @@ public class main extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
+        
         topLabel.setFont(sunny.deriveFont(55f));
         welcomeText.setFont(sunny.deriveFont(75f));
         afterWelcomeText.setFont(sunny.deriveFont(35f));
+        rakitLabel.setFont(sunny.deriveFont(50f));
         
         setVisiblePanel(true, false, false, false);
         uneditableTextField();
@@ -103,6 +105,7 @@ public class main extends javax.swing.JFrame {
                     dialog.setVisible(true);
                     setDialog();
                     savedData.clear();
+                    fCancelButton.setText("Back");
                     
                     // Perform actions after progress completes
                 } else {
@@ -222,7 +225,7 @@ public class main extends javax.swing.JFrame {
     //Fungsi ini menambahkan data yang disimpan ke dalam tabel
     public void addDataTable(){
         DefaultTableModel model = (DefaultTableModel)tableDetailProduct.getModel();
-//        model.setRowCount(0);
+        model.setRowCount(0);
         for(BarangDto item: savedData){
             String[] row = new String[4];
                 row[0] = item.getName();
@@ -232,6 +235,11 @@ public class main extends javax.swing.JFrame {
 
             model.addRow(row);
         }
+        tableDetailProduct.setRowHeight(25);
+        tableDetailProduct.getColumnModel().getColumn(0).setPreferredWidth(65);
+        tableDetailProduct.getColumnModel().getColumn(1).setPreferredWidth(65);
+        tableDetailProduct.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tableDetailProduct.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
     
     public void totalPayment(JTextField textField){
@@ -381,6 +389,8 @@ public void rbEnable(boolean choice){
     
     public void uneditableTextField(){
         cbVarian.setEditable(false);
+        dateTextField.setEditable(false);
+        totalBayar.setEnabled(false);
         namaBarang.setEditable(false);
         hargaBarang.setEditable(false);
         namaMonitor.setEditable(false);
@@ -513,19 +523,20 @@ public void rbEnable(boolean choice){
         hargaPSU = new javax.swing.JTextField();
         hargaVGA = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
+        rakitLabel = new javax.swing.JLabel();
         fBackButton = new tugas.FButton();
         fNextButton = new tugas.FButton();
         pnlPembayaran = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        dateTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDetailProduct = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
         totalBayar = new javax.swing.JTextField();
         fButton2 = new tugas.FButton();
-        fButton3 = new tugas.FButton();
+        fCancelButton = new tugas.FButton();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        dateTextField = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
         pnlBeranda = new javax.swing.JPanel();
         jRakitButton = new javax.swing.JButton();
         jBelanjaButton = new javax.swing.JButton();
@@ -563,7 +574,7 @@ public void rbEnable(boolean choice){
         Home.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 940, 80));
 
         jPanel3.setBackground(new java.awt.Color(41, 54, 63));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jBeranda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
@@ -582,9 +593,7 @@ public void rbEnable(boolean choice){
         jBeranda.setLayout(jBerandaLayout);
         jBerandaLayout.setHorizontalGroup(
             jBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jBerandaLayout.createSequentialGroup()
-                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
         );
         jBerandaLayout.setVerticalGroup(
             jBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -593,7 +602,7 @@ public void rbEnable(boolean choice){
 
         jPanel3.add(jBeranda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 60));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
@@ -615,7 +624,7 @@ public void rbEnable(boolean choice){
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 220, 60));
@@ -1105,8 +1114,8 @@ public void rbEnable(boolean choice){
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(357, 80));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel22.setText("Simulasi Rakit PC");
+        rakitLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        rakitLabel.setText("Komponen Rakit PC");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1114,12 +1123,12 @@ public void rbEnable(boolean choice){
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rakitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+            .addComponent(rakitLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
         );
 
         fBackButton.setText("Back");
@@ -1373,8 +1382,6 @@ public void rbEnable(boolean choice){
 
         jPanel4.add(pnlRakit, "card3");
 
-        jLabel14.setText("Tanggal :");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel5.setText("Total Bayar   :");
 
@@ -1383,7 +1390,7 @@ public void rbEnable(boolean choice){
 
             },
             new String [] {
-                "Nama Barang", "Kode", "Varian", "Harga"
+                "Nama Barang", "Kode Barang", "Varian", "Harga"
             }
         ) {
             Class[] types = new Class [] {
@@ -1401,16 +1408,14 @@ public void rbEnable(boolean choice){
                 return canEdit [columnIndex];
             }
         });
-        tableDetailProduct.setFocusable(false);
         tableDetailProduct.setIntercellSpacing(new java.awt.Dimension(0, 0));
         tableDetailProduct.setRowSelectionAllowed(false);
         tableDetailProduct.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tableDetailProduct);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Detail Transaksi");
-
+        totalBayar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         totalBayar.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        totalBayar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         totalBayar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 totalBayarActionPerformed(evt);
@@ -1425,62 +1430,80 @@ public void rbEnable(boolean choice){
             }
         });
 
-        fButton3.setText("Cancel");
-        fButton3.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        fButton3.addActionListener(new java.awt.event.ActionListener() {
+        fCancelButton.setText("Cancel");
+        fCancelButton.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        fCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fButton3ActionPerformed(evt);
+                fCancelButtonActionPerformed(evt);
             }
         });
+
+        jPanel8.setBackground(new java.awt.Color(204, 204, 255));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setText("Detail Transaksi");
+
+        jLabel14.setText("Tanggal :");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel14))
+        );
 
         javax.swing.GroupLayout pnlPembayaranLayout = new javax.swing.GroupLayout(pnlPembayaran);
         pnlPembayaran.setLayout(pnlPembayaranLayout);
         pnlPembayaranLayout.setHorizontalGroup(
             pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlPembayaranLayout.createSequentialGroup()
                 .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE))
-                    .addGroup(pnlPembayaranLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPembayaranLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
+                                .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(fCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         pnlPembayaranLayout.setVerticalGroup(
             pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPembayaranLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(179, Short.MAX_VALUE))
+                    .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
 
         jPanel4.add(pnlPembayaran, "card3");
@@ -1678,8 +1701,7 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_totalBayarActionPerformed
 
     private void jClose2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClose2MouseClicked
-        // TODO add your handling code here:
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jClose2MouseClicked
 
     private void jBerandaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBerandaMousePressed
@@ -1879,10 +1901,11 @@ public void rbEnable(boolean choice){
         fButton2.setEnabled(false);
     }//GEN-LAST:event_fButton2ActionPerformed
 
-    private void fButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fButton3ActionPerformed
+    private void fCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fCancelButtonActionPerformed
         backToHome();
         fButton2.setEnabled(true);
-    }//GEN-LAST:event_fButton3ActionPerformed
+        fCancelButton.setText("Cancel");
+    }//GEN-LAST:event_fCancelButtonActionPerformed
 
     private void fButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fButton5ActionPerformed
         if(buttonGroup1.getSelection()==null){
@@ -1898,7 +1921,7 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_fButton5ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
@@ -1956,8 +1979,8 @@ public void rbEnable(boolean choice){
     private tugas.FButton fAddButton;
     private tugas.FButton fBackButton;
     private tugas.FButton fButton2;
-    private tugas.FButton fButton3;
     private tugas.FButton fButton5;
+    private tugas.FButton fCancelButton;
     private tugas.FButton fNextButton;
     private tugas.FButton fPayButton;
     private javax.swing.JTextField hargaBarang;
@@ -1991,7 +2014,6 @@ public void rbEnable(boolean choice){
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -2016,6 +2038,7 @@ public void rbEnable(boolean choice){
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JComboBox<String> jProcessorBox;
     private javax.swing.JComboBox<String> jRAMBox;
     private javax.swing.JButton jRakitButton;
@@ -2045,6 +2068,7 @@ public void rbEnable(boolean choice){
     private javax.swing.JPanel pnlBeranda;
     private javax.swing.JPanel pnlPembayaran;
     private javax.swing.JPanel pnlRakit;
+    private javax.swing.JLabel rakitLabel;
     private javax.swing.JRadioButton rbCPU;
     private javax.swing.JRadioButton rbCasing;
     private javax.swing.JRadioButton rbCooler;
