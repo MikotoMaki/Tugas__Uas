@@ -747,9 +747,6 @@
                       <SpinnerModel initial="1" maximum="100" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jumlahBarangSpinnerStateChanged"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -775,162 +772,162 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel16" pref="0" max="32767" attributes="0"/>
                                       <Component id="jLabel17" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="jLabel15" max="32767" attributes="0"/>
+                                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel20" alignment="1" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="jLabel15" max="32767" attributes="0"/>
-                                                      <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel20" alignment="1" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                              <Component id="jPSUBox" pref="144" max="32767" attributes="0"/>
-                                                              <Component id="jVGABox" max="32767" attributes="0"/>
-                                                          </Group>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                              <Group type="102" attributes="0">
-                                                                  <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
-                                                                  <Component id="fBackButton" min="-2" pref="80" max="-2" attributes="0"/>
-                                                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                                                  <Component id="fNextButton" min="-2" pref="80" max="-2" attributes="0"/>
-                                                              </Group>
-                                                              <Group type="102" alignment="1" attributes="0">
-                                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                                      <Component id="namaVGA" max="32767" attributes="0"/>
-                                                                      <Component id="namaPSU" max="32767" attributes="0"/>
-                                                                  </Group>
-                                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                                      <Component id="hargaVGA" min="-2" pref="164" max="-2" attributes="0"/>
-                                                                      <Component id="hargaPSU" min="-2" pref="163" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
-                                                          </Group>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                          <Component id="jCoolerBox" min="-2" pref="142" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="jSpinnerCooler" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                                          <Component id="namaCooler" min="-2" pref="175" max="-2" attributes="0"/>
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="hargaCooler" min="-2" pref="164" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jLabel18" max="32767" attributes="0"/>
-                                                      <Component id="jLabel19" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jSSDBox" pref="143" max="32767" attributes="0"/>
-                                                      <Component id="jHDDBox" max="32767" attributes="0"/>
+                                                      <Component id="jPSUBox" pref="144" max="32767" attributes="0"/>
+                                                      <Component id="jVGABox" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jSpinnerSSD" max="32767" attributes="0"/>
-                                                      <Component id="jSpinnerHDD" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="namaHDD" pref="176" max="32767" attributes="0"/>
-                                                      <Component id="namaSSD" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="hargaSSD" pref="163" max="32767" attributes="0"/>
-                                                      <Component id="hargaHDD" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="jLabel9" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Group type="102" attributes="0">
-                                                          <Component id="jRAMBox" min="-2" pref="140" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="jSpinnerRAM" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="namaRAM" max="32767" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="225" max="-2" attributes="0"/>
+                                                          <Component id="fBackButton" min="-2" pref="80" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                                          <Component id="fNextButton" min="-2" pref="80" max="-2" attributes="0"/>
                                                       </Group>
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <Group type="103" groupAlignment="1" attributes="0">
+                                                              <Component id="namaVGA" max="32767" attributes="0"/>
+                                                              <Component id="namaPSU" max="32767" attributes="0"/>
+                                                          </Group>
+                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="1" attributes="0">
+                                                              <Component id="hargaVGA" min="-2" pref="164" max="-2" attributes="0"/>
+                                                              <Component id="hargaPSU" min="-2" pref="163" max="-2" attributes="0"/>
+                                                          </Group>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                                  <Component id="jCoolerBox" min="-2" pref="142" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="jSpinnerCooler" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                                  <Component id="namaCooler" min="-2" pref="204" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="hargaCooler" min="-2" pref="140" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jLabel18" max="32767" attributes="0"/>
+                                              <Component id="jLabel19" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jSSDBox" pref="143" max="32767" attributes="0"/>
+                                              <Component id="jHDDBox" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jSpinnerSSD" max="32767" attributes="0"/>
+                                              <Component id="jSpinnerHDD" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="namaSSD" pref="206" max="32767" attributes="0"/>
+                                              <Component id="namaHDD" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="hargaSSD" pref="138" max="32767" attributes="0"/>
+                                              <Component id="hargaHDD" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jLabel9" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
+                                                  <Component id="jRAMBox" min="-2" pref="140" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="jSpinnerRAM" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="namaRAM" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="1" attributes="0">
                                                       <Group type="102" alignment="1" attributes="0">
                                                           <Component id="jMotherboardBox" min="-2" pref="138" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="jSpinnerMotherboard" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="namaMotherboard" min="-2" pref="176" max="-2" attributes="0"/>
+                                                          <Component id="namaMotherboard" min="-2" pref="196" max="-2" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" alignment="1" attributes="0">
                                                           <Component id="jProcessorBox" min="-2" pref="140" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="jSpinnerProcessor" min="-2" max="-2" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
-                                                          <Component id="namaProcessor" min="-2" pref="176" max="-2" attributes="0"/>
+                                                          <Component id="namaProcessor" min="-2" pref="220" max="-2" attributes="0"/>
                                                       </Group>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="hargaMotherboard" alignment="0" pref="165" max="32767" attributes="0"/>
-                                                      <Component id="hargaProcessor" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="hargaRAM" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="jLabel21" max="32767" attributes="0"/>
-                                                      <Component id="jLabel23" max="32767" attributes="0"/>
-                                                      <Component id="jLabel24" pref="134" max="32767" attributes="0"/>
-                                                      <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Group type="102" alignment="1" attributes="0">
-                                                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                                          <Component id="jMouseBox" min="-2" pref="141" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Group type="102" attributes="0">
-                                                              <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-                                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                                  <Component id="jMonitorBox" pref="141" max="32767" attributes="0"/>
-                                                                  <Component id="jCasingBox" max="32767" attributes="0"/>
-                                                              </Group>
-                                                          </Group>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                              <Component id="jKeyboardBox" min="-2" pref="140" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="namaMouse" pref="212" max="32767" attributes="0"/>
-                                                      <Component id="namaKeyboard" max="32767" attributes="0"/>
-                                                      <Component id="namaCasing" max="32767" attributes="0"/>
-                                                      <Component id="namaMonitor" max="32767" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="hargaKeyboard" alignment="0" pref="170" max="32767" attributes="0"/>
-                                                      <Component id="hargaMonitor" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="hargaCasing" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="hargaMouse" max="32767" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Component id="jLabel7" alignment="0" min="-2" pref="750" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="hargaMotherboard" min="-2" pref="141" max="-2" attributes="0"/>
+                                              <Component id="hargaProcessor" min="-2" pref="141" max="-2" attributes="0"/>
+                                              <Component id="hargaRAM" min="-2" pref="141" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="jLabel21" max="32767" attributes="0"/>
+                                              <Component id="jLabel23" max="32767" attributes="0"/>
+                                              <Component id="jLabel24" pref="134" max="32767" attributes="0"/>
+                                              <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                                  <Component id="jMouseBox" min="-2" pref="141" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                          <Component id="jMonitorBox" pref="141" max="32767" attributes="0"/>
+                                                          <Component id="jCasingBox" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                      <Component id="jKeyboardBox" min="-2" pref="140" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="namaCasing" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
+                                              <Component id="namaKeyboard" min="-2" pref="257" max="-2" attributes="0"/>
+                                              <Component id="namaMonitor" min="-2" pref="257" max="-2" attributes="0"/>
+                                              <Component id="namaMouse" alignment="0" min="-2" pref="257" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="hargaCasing" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                              <Component id="hargaMonitor" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                              <Component id="hargaKeyboard" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                              <Component id="hargaMouse" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="jLabel7" alignment="0" min="-2" pref="750" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jPanel2" alignment="0" pref="762" max="32767" attributes="0"/>
@@ -946,15 +943,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel17" min="-2" pref="4" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel21" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                                      <Component id="jCasingBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="hargaCasing" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="namaCasing" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel21" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jCasingBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="namaCasing" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="hargaCasing" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -980,20 +973,27 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" pref="4" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jProcessorBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSpinnerProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="namaProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="hargaProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel8" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                              <Component id="jMotherboardBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSpinnerMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="namaMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="hargaMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" pref="14" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jProcessorBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jSpinnerProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="namaProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="hargaProcessor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jMotherboardBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jSpinnerMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="namaMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="hargaMotherboard" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -1052,7 +1052,7 @@
                               <Component id="fBackButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="fNextButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="48" max="32767" attributes="0"/>
+                          <EmptySpace pref="32" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1114,9 +1114,6 @@
                       <Connection code="1" type="code"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerProcessorStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="jSpinnerMotherboard">
                   <Properties>
@@ -1124,9 +1121,6 @@
                       <SpinnerModel initial="1" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerMotherboardStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="namaCasing">
                 </Component>
@@ -1157,9 +1151,6 @@
                       <SpinnerModel initial="1" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerRAMStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="namaMotherboard">
                 </Component>
@@ -1376,9 +1367,6 @@
                       <SpinnerModel initial="1" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerSSDStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JSpinner" name="jSpinnerHDD">
                   <Properties>
@@ -1386,9 +1374,6 @@
                       <SpinnerModel initial="1" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerHDDStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel26">
                   <Properties>
@@ -1419,9 +1404,6 @@
                       <SpinnerModel initial="1" maximum="10" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerCoolerStateChanged"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="hargaCasing">
                 </Component>
@@ -1683,7 +1665,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="dateTextField" min="-2" pref="89" max="-2" attributes="0"/>
+                              <Component id="dateTextField" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           </Group>
                       </Group>
