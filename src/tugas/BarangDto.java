@@ -5,15 +5,25 @@ public class BarangDto {
     private String product;
     private String price;
     private String name;
+    private String amount;
 
     public BarangDto() {
     }
 
-    public BarangDto(String name, String code, String product, String price) {
+    public BarangDto(String name, String code, String product, String price, String amount) {
         this.code = code;
         this.product = product;
         this.price = price;
         this.name = name;
+        this.amount = amount;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getName() {

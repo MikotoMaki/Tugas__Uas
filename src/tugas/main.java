@@ -33,7 +33,8 @@ public class main extends javax.swing.JFrame {
     Dialog dialog = new Dialog();
     private Timer timer;
     private int progress;
-    private boolean inProgress = false;
+    private boolean inBelanja = false;
+    private boolean inRakit = false;
     
     List<BarangDto> savedData = new ArrayList<>();
     boolean cleanData=false;
@@ -107,6 +108,7 @@ public class main extends javax.swing.JFrame {
                     dialog.setVisible(true);
                     setDialog();
                     savedData.clear();
+                    fCancelButton.setEnabled(true);
                     fCancelButton.setText("Back");
                 } else {
                     progress++;
@@ -123,6 +125,35 @@ public class main extends javax.swing.JFrame {
         dialog.transactionTime.setText(dateTime.format(now).toString());
         totalPayment(dialog.amount);
         
+    }
+ 
+    public void resetBelanjaPanel(){
+        cbVarian.setEnabled(false);
+        clean(cbVarian, namaBarang, hargaBarang);
+        jumlahBarangSpinner.setValue(1);
+        jumlahBarangSpinner.setEnabled(false);
+    }
+    
+    public void resetRakitPanel(){
+        clean(jCasingBox, namaCasing, hargaCasing);
+        clean(jMonitorBox, namaMonitor, hargaMonitor);
+        clean(jKeyboardBox, namaKeyboard, hargaKeyboard);
+        clean(jMouseBox, namaMouse, hargaMouse);
+        clean(jProcessorBox, namaProcessor, hargaProcessor);
+        clean(jRAMBox, namaRAM, hargaRAM);
+        clean(jMotherboardBox, namaMotherboard, hargaMotherboard);
+        clean(jSSDBox, namaSSD, hargaSSD);
+        clean(jHDDBox, namaHDD, hargaHDD);
+        clean(jPSUBox, namaPSU, hargaPSU);
+        clean(jCoolerBox, namaCooler, hargaCooler);
+        clean(jVGABox, namaVGA, hargaVGA);
+        
+        jSpinnerProcessor.setValue(1);
+        jSpinnerMotherboard.setValue(1);
+        jSpinnerSSD.setValue(1);
+        jSpinnerHDD.setValue(1);
+        jSpinnerCooler.setValue(1);
+        jSpinnerRAM.setValue(1);
     }
     
     public void backToHome(){
@@ -168,6 +199,7 @@ public class main extends javax.swing.JFrame {
         String replace3 = replace2.replace(".", "");
         return replace3;
     }
+    
     
     //Mengembalikan nilai pada spinner yang berubah
     public void setTextAfterChanged(JSpinner product, JComboBox varian, String name, JTextField price){
@@ -217,8 +249,8 @@ public class main extends javax.swing.JFrame {
     }
     
     //Menyimpan data barang yang telah ditambahkan
-    public void saveData(String name, String code, String varian, String price){
-        BarangDto item = new BarangDto(name, code, varian, price);
+    public void saveData(String name, String code, String varian, String price, String amount){
+        BarangDto item = new BarangDto(name, code, varian, price, amount);
         savedData.add(item);
     }
     
@@ -227,11 +259,12 @@ public class main extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)tableDetailProduct.getModel();
         model.setRowCount(0);
         for(BarangDto item: savedData){
-            String[] row = new String[4];
+            String[] row = new String[5];
                 row[0] = item.getName();
                 row[1] = item.getCode();
                 row[2] = item.getProduct();
                 row[3] = item.getPrice();
+                row[4] = item.getAmount();
 
             model.addRow(row);
         }
@@ -239,7 +272,8 @@ public class main extends javax.swing.JFrame {
         tableDetailProduct.getColumnModel().getColumn(0).setPreferredWidth(65);
         tableDetailProduct.getColumnModel().getColumn(1).setPreferredWidth(65);
         tableDetailProduct.getColumnModel().getColumn(2).setPreferredWidth(200);
-        tableDetailProduct.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tableDetailProduct.getColumnModel().getColumn(3).setPreferredWidth(85);
+        tableDetailProduct.getColumnModel().getColumn(4).setPreferredWidth(50);
     }
     
     //Menghitung total bayar
@@ -247,7 +281,7 @@ public class main extends javax.swing.JFrame {
         int total = 0;
         int price;
         for(BarangDto item:savedData){
-            price = Integer.parseInt(convertPrice(item.getPrice()));
+            price = Integer.parseInt(convertPrice(item.getPrice())) * Integer.parseInt(item.getAmount());
             total += price;
         }
         textField.setText(formatRupiah.format(total));
@@ -261,26 +295,37 @@ public class main extends javax.swing.JFrame {
             
     }
     
+    public void cleanItem(JTextField name, JTextField price){
+        name.setText("");
+        price.setText("");
+    }
+    
     //Menampilkan data pada text field
     public void setTextField(JComboBox product, JTextField name, JTextField price){
-        if(product.getSelectedItem().toString()=="PILIH"){
-            clean(name, price);
+        if(cleanData!=true){
+            if(product.getSelectedItem().toString()=="PILIH"){
+            cleanItem(name, price);
         } else {
             data.setKode(product.getSelectedItem().toString());
             data.dataSelection();
             setData(name, price);        
         }
+        }
+        
     }
     
     //Bug?
     public void setTextFieldSpinner(JComboBox product, JTextField name, JTextField price, int val){
-        if(product.getSelectedItem().toString()=="PILIH"){
-            clean(name, price);
+        if(cleanData!=true){
+            if(product.getSelectedItem().toString()=="PILIH"){
+            cleanItem(name, price);
         } else {
             data.setKode(product.getSelectedItem().toString());
             data.dataSelection();
             setDataSpinner(name, price, val);        
         }
+        }
+        
     }
     
     public void setDataSpinner(JTextField name, JTextField price, int val){
@@ -291,7 +336,7 @@ public class main extends javax.swing.JFrame {
     
     //Bug?
     public void setChangedSpinner(JSpinner product, JComboBox productBox, JTextField name, JTextField price){
-        clean(name, price);
+        cleanItem(name, price);
         int val = Integer.parseInt(product.getValue().toString());
         setTextFieldSpinner(productBox, name, price, val);
     }
@@ -366,7 +411,8 @@ public class main extends javax.swing.JFrame {
     }
     
     //Mereset text field
-    public void clean(JTextField name, JTextField price){
+    public void clean(JComboBox box, JTextField name, JTextField price){
+        box.removeAllItems();
         name.setText("");
         price.setText("");
     }
@@ -465,6 +511,8 @@ public void rbEnable(boolean choice){
         fAddButton = new tugas.FButton();
         fPayButton = new tugas.FButton();
         fButton5 = new tugas.FButton();
+        jLabel1 = new javax.swing.JLabel();
+        jumlahBarangSpinner = new javax.swing.JSpinner();
         pnlRakit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jProcessorBox = new javax.swing.JComboBox<>();
@@ -812,6 +860,17 @@ public void rbEnable(boolean choice){
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel1.setText("Jumlah Barang     :");
+
+        jumlahBarangSpinner.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jumlahBarangSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 100, 1));
+        jumlahBarangSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jumlahBarangSpinnerStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBelanjaLayout = new javax.swing.GroupLayout(pnlBelanja);
         pnlBelanja.setLayout(pnlBelanjaLayout);
         pnlBelanjaLayout.setHorizontalGroup(
@@ -849,11 +908,14 @@ public void rbEnable(boolean choice){
                         .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                                .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(fAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -908,12 +970,20 @@ public void rbEnable(boolean choice){
                     .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel28)
-                    .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fPayButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                        .addComponent(fAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)))
-                .addGap(614, 614, 614))
+                    .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fPayButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                            .addComponent(fAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                        .addGap(614, 614, 614))
+                    .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel28)
+                            .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel4.add(pnlBelanja, "card4");
@@ -1368,14 +1438,14 @@ public void rbEnable(boolean choice){
 
             },
             new String [] {
-                "Nama Barang", "Kode Barang", "Varian", "Harga"
+                "Nama Barang", "Kode Barang", "Varian", "Harga", "Jumlah"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1664,8 +1734,9 @@ public void rbEnable(boolean choice){
 
     private void cbVarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbVarianActionPerformed
         if(cleanData!=true){
+            jumlahBarangSpinner.setValue(1);
             setTextField(cbVarian, namaBarang, hargaBarang);
-        }  
+        }
     }//GEN-LAST:event_cbVarianActionPerformed
 
     private void jClose2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClose2MouseClicked
@@ -1674,12 +1745,24 @@ public void rbEnable(boolean choice){
 
     private void jBerandaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBerandaMousePressed
         backToHome();
+        cleanData = true;
         fButton2.setEnabled(true);
+        if(inBelanja==true){
+            cleanData = true;
+            clean(cbVarian, hargaBarang, namaBarang);
+            rbEnable(true);
+            jumlahBarangSpinner.setValue(1);
+            inBelanja = false;
+        }
+        if(inRakit==true){
+            resetRakitPanel();
+            inRakit = false;
+        }
         
     }//GEN-LAST:event_jBerandaMousePressed
 
     private void jSpinnerCoolerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerCoolerStateChanged
-        setTextAfterChanged(jSpinnerCooler, jCoolerBox, "Cooler", hargaCooler);
+//        setTextAfterChanged(jSpinnerCooler, jCoolerBox, "Cooler", hargaCooler);
     }//GEN-LAST:event_jSpinnerCoolerStateChanged
 
     private void jCoolerBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCoolerBoxActionPerformed
@@ -1688,11 +1771,11 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_jCoolerBoxActionPerformed
 
     private void jSpinnerHDDStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerHDDStateChanged
-        setTextAfterChanged(jSpinnerHDD, jHDDBox, "HDD", hargaHDD);
+//        setTextAfterChanged(jSpinnerHDD, jHDDBox, "HDD", hargaHDD);
     }//GEN-LAST:event_jSpinnerHDDStateChanged
 
     private void jSpinnerSSDStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerSSDStateChanged
-        setTextAfterChanged(jSpinnerSSD, jSSDBox, "SSD", hargaSSD);
+//        setTextAfterChanged(jSpinnerSSD, jSSDBox, "SSD", hargaSSD);
     }//GEN-LAST:event_jSpinnerSSDStateChanged
 
     private void jPSUBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPSUBoxActionPerformed
@@ -1740,7 +1823,7 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_jCasingBoxActionPerformed
 
     private void jSpinnerRAMStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerRAMStateChanged
-        setTextAfterChanged(jSpinnerRAM, jRAMBox, "RAM", hargaRAM);
+//        setTextAfterChanged(jSpinnerRAM, jRAMBox, "RAM", hargaRAM);
     }//GEN-LAST:event_jSpinnerRAMStateChanged
 
     private void jRAMBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRAMBoxActionPerformed
@@ -1749,11 +1832,11 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_jRAMBoxActionPerformed
 
     private void jSpinnerMotherboardStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerMotherboardStateChanged
-        setTextAfterChanged(jSpinnerMotherboard, jMotherboardBox, "Motherboard", hargaMotherboard);
+//        setTextAfterChanged(jSpinnerMotherboard, jMotherboardBox, "Motherboard", hargaMotherboard);
     }//GEN-LAST:event_jSpinnerMotherboardStateChanged
 
     private void jSpinnerProcessorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerProcessorStateChanged
-        setTextAfterChanged(jSpinnerProcessor, jProcessorBox, "CPU", hargaProcessor);
+//        setTextAfterChanged(jSpinnerProcessor, jProcessorBox, "CPU", hargaProcessor);
     }//GEN-LAST:event_jSpinnerProcessorStateChanged
 
     private void jMotherboardBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMotherboardBoxActionPerformed
@@ -1769,6 +1852,8 @@ public void rbEnable(boolean choice){
 
     private void jBelanjaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBelanjaButtonActionPerformed
         setVisiblePanel(false,true,false,false);
+        jumlahBarangSpinner.setEnabled(false);
+        cbVarian.setEnabled(false);
         fAddButton.setEnabled(false);
         fPayButton.setEnabled(false);
     }//GEN-LAST:event_jBelanjaButtonActionPerformed
@@ -1776,11 +1861,18 @@ public void rbEnable(boolean choice){
     private void jRakitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRakitButtonActionPerformed
         setVisiblePanel(false,false,true,false);
         addChoice2();
+        inRakit = true;
+        cleanData = false;
     }//GEN-LAST:event_jRakitButtonActionPerformed
 
     private void backButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButton2ActionPerformed
         backToHome();
+        cleanData = true;
+        clean(cbVarian, hargaBarang, namaBarang);
         rbEnable(true);
+        jumlahBarangSpinner.setValue(1);
+            
+        fAddButton.setEnabled(false);
         buttonGroup1.clearSelection();
     }//GEN-LAST:event_backButton2ActionPerformed
 
@@ -1798,11 +1890,13 @@ public void rbEnable(boolean choice){
         if(cbVarian.getSelectedItem().toString()=="PILIH"){
             JOptionPane.showMessageDialog(null, "Varian Belum Dipilih", "WARNING", JOptionPane.OK_OPTION);
         } else{
-            saveData(data.getNama(), cbVarian.getSelectedItem().toString(), namaBarang.getText().toString(), hargaBarang.getText().toString());
+            saveData(data.getNama(), cbVarian.getSelectedItem().toString(), namaBarang.getText().toString(), hargaBarang.getText().toString(), jumlahBarangSpinner.getValue().toString());
             cleanData = true;
-            cbVarian.removeAllItems();
-            clean(hargaBarang, namaBarang);
+            clean(cbVarian, hargaBarang, namaBarang);
             rbEnable(true);
+            jumlahBarangSpinner.setValue(1);
+            jumlahBarangSpinner.setEnabled(false);
+            cbVarian.setEnabled(false);
             
             fAddButton.setEnabled(false);
         }
@@ -1810,6 +1904,10 @@ public void rbEnable(boolean choice){
 
     private void fBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fBackButtonActionPerformed
         backToHome();
+        cleanData = true;
+        if(inRakit==true){
+            resetRakitPanel();
+        }
     }//GEN-LAST:event_fBackButtonActionPerformed
 
     private void fNextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fNextButtonActionPerformed
@@ -1831,26 +1929,29 @@ public void rbEnable(boolean choice){
                 coolerSelected=="PILIH" || psuSelected=="PILIH" || vgaSelected=="PILIH"){
             JOptionPane.showMessageDialog(null, "Data masih kosong", "WARNING", JOptionPane.OK_OPTION);
         } else {
-            saveData("Casing", casingSelected, namaCasing.getText(), hargaCasing.getText());
-            saveData("Monitor", monitorSelected, namaMonitor.getText(), hargaMonitor.getText());
-            saveData("Keyboard", keyboardSelected, namaKeyboard.getText(), hargaKeyboard.getText());
-            saveData("Mouse", mouseSelected, namaMouse.getText(), hargaMouse.getText());
-            saveData("Processor", cpuSelected, namaProcessor.getText(), hargaProcessor.getText());
-            saveData("Motherboard", motherboardSelected, namaMotherboard.getText(), hargaMotherboard.getText());
-            saveData("RAM", ramSelected, namaRAM.getText(), hargaRAM.getText());
-            saveData("SSD", ssdSelected, namaSSD.getText(), hargaSSD.getText());
-            saveData("HDD", hddSelected, namaHDD.getText(), hargaHDD.getText());
-            saveData("Cooler", coolerSelected, namaCooler.getText(), hargaCooler.getText());
-            saveData("PSU", psuSelected, namaPSU.getText(), hargaPSU.getText());
-            saveData("VGA", vgaSelected, namaVGA.getText(), hargaVGA.getText());
+            saveData("Casing", casingSelected, namaCasing.getText(), hargaCasing.getText(), "1");
+            saveData("Monitor", monitorSelected, namaMonitor.getText(), hargaMonitor.getText(), "1");
+            saveData("Keyboard", keyboardSelected, namaKeyboard.getText(), hargaKeyboard.getText(), "1");
+            saveData("Mouse", mouseSelected, namaMouse.getText(), hargaMouse.getText(), "1");
+            saveData("Processor", cpuSelected, namaProcessor.getText(), hargaProcessor.getText(), jSpinnerProcessor.getValue().toString());
+            saveData("Motherboard", motherboardSelected, namaMotherboard.getText(), hargaMotherboard.getText(), jSpinnerMotherboard.getValue().toString());
+            saveData("RAM", ramSelected, namaRAM.getText(), hargaRAM.getText(), jSpinnerProcessor.getValue().toString());
+            saveData("SSD", ssdSelected, namaSSD.getText(), hargaSSD.getText(), jSpinnerSSD.getValue().toString());
+            saveData("HDD", hddSelected, namaHDD.getText(), hargaHDD.getText(), jSpinnerHDD.getValue().toString());
+            saveData("Cooler", coolerSelected, namaCooler.getText(), hargaCooler.getText(), jSpinnerCooler.getValue().toString());
+            saveData("PSU", psuSelected, namaPSU.getText(), hargaPSU.getText(), "1");
+            saveData("VGA", vgaSelected, namaVGA.getText(), hargaVGA.getText(), "1");
             
             addDataTable();
             totalPayment(totalBayar);
+            cleanData = true;
+            resetRakitPanel();
             setVisiblePanel(false, false, false, true);            
         }
     }//GEN-LAST:event_fNextButtonActionPerformed
 
     private void fButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fButton2ActionPerformed
+        fCancelButton.setEnabled(false);
         ls.setLocationRelativeTo(null);
         ls.setVisible(true);
         startProgress();
@@ -1859,6 +1960,7 @@ public void rbEnable(boolean choice){
 
     private void fCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fCancelButtonActionPerformed
         backToHome();
+        
         fButton2.setEnabled(true);
         fCancelButton.setText("Cancel");
     }//GEN-LAST:event_fCancelButtonActionPerformed
@@ -1867,18 +1969,25 @@ public void rbEnable(boolean choice){
         if(buttonGroup1.getSelection()==null){
             JOptionPane.showMessageDialog(null, "Anda Belum Memilih Komponen", "WARNING", JOptionPane.OK_OPTION);
         } else{
+            inBelanja = true;
             buttonGroup1.clearSelection();
             cleanData=false;
             addChoice();
             rbEnable(false);
+            cbVarian.setEnabled(true);
+            jumlahBarangSpinner.setEnabled(true);
             fAddButton.setEnabled(true);
-            fPayButton.setEnabled(true);           
+            fPayButton.setEnabled(true);  
         }
     }//GEN-LAST:event_fButton5ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jumlahBarangSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jumlahBarangSpinnerStateChanged
+//        setTextAfterChanged(jumlahBarangSpinner, cbVarian, data.getNama(), hargaBarang);
+    }//GEN-LAST:event_jumlahBarangSpinnerStateChanged
 
     /**
      * @param args the command line arguments
@@ -1959,6 +2068,7 @@ public void rbEnable(boolean choice){
     private javax.swing.JComboBox<String> jCoolerBox;
     private javax.swing.JComboBox<String> jHDDBox;
     private javax.swing.JComboBox<String> jKeyboardBox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -2007,6 +2117,7 @@ public void rbEnable(boolean choice){
     private javax.swing.JSpinner jSpinnerRAM;
     private javax.swing.JSpinner jSpinnerSSD;
     private javax.swing.JComboBox<String> jVGABox;
+    private javax.swing.JSpinner jumlahBarangSpinner;
     private javax.swing.JTextField namaBarang;
     private javax.swing.JTextField namaCasing;
     private javax.swing.JTextField namaCooler;
