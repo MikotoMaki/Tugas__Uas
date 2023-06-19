@@ -63,8 +63,6 @@ public class main extends javax.swing.JFrame {
     LocalDateTime now = LocalDateTime.now();
 
     Font sunny;
-    Font nature;
-    Font mouldy;
 
     public main() {
         initComponents();
@@ -72,12 +70,8 @@ public class main extends javax.swing.JFrame {
         //Creating font
         try {
             sunny = Font.createFont(Font.TRUETYPE_FONT, new File("SunnyspellsRegular-MV9ze.ttf"));
-            nature = Font.createFont(Font.TRUETYPE_FONT, new File("NatureBeautyPersonalUse-9Y2DK.ttf")).deriveFont(50f);
-            mouldy = Font.createFont(Font.TRUETYPE_FONT, new File("MouldyCheeseRegular-WyMWG.ttf")).deriveFont(50f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("SunnyspellsRegular-MV9ze.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("NatureBeautyPersonalUse-9Y2DK.ttf")));
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MouldyCheeseRegular-WyMWG.ttf")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -569,8 +563,8 @@ public class main extends javax.swing.JFrame {
         topLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         topLabel.setForeground(new java.awt.Color(51, 51, 51));
         topLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Computer Menu.png"))); // NOI18N
-        topLabel.setText("  TOKO KOMPUTER");
-        jPanel5.add(topLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 380, 90));
+        topLabel.setText(" DIGITAL TECH SOLUTIONS");
+        jPanel5.add(topLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 910, 90));
 
         Home.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 940, 90));
 

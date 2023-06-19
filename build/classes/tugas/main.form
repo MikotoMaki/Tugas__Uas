@@ -80,11 +80,11 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/icon/Computer Menu.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="  TOKO KOMPUTER"/>
+                <Property name="text" type="java.lang.String" value=" DIGITAL TECH SOLUTIONS"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="30" y="0" width="380" height="90"/>
+                  <AbsoluteConstraints x="30" y="0" width="910" height="90"/>
                 </Constraint>
               </Constraints>
             </Component>
