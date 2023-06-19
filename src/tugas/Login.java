@@ -172,14 +172,14 @@ public class Login extends javax.swing.JFrame {
 
         jpanel.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 400, 430));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Computer Login.png"))); // NOI18N
-        jpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 360, 380));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/3d-computer(2).png"))); // NOI18N
+        jpanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 350, 410));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

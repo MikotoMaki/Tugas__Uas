@@ -87,6 +87,7 @@ public class main extends javax.swing.JFrame {
         welcomeText.setFont(sunny.deriveFont(75f));
         afterWelcomeText.setFont(sunny.deriveFont(35f));
         rakitLabel.setFont(sunny.deriveFont(50f));
+        detailTransaksiText.setFont(sunny.deriveFont(50f));
 
         setVisiblePanel(true, false, false, false);
         uneditableTextField();
@@ -542,7 +543,7 @@ public class main extends javax.swing.JFrame {
         fButton2 = new tugas.FButton();
         fCancelButton = new tugas.FButton();
         jPanel8 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        detailTransaksiText = new javax.swing.JLabel();
         dateTextField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
@@ -1634,8 +1635,8 @@ public class main extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(204, 204, 255));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Detail Transaksi");
+        detailTransaksiText.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        detailTransaksiText.setText("Detail Transaksi");
 
         dateTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -1648,7 +1649,7 @@ public class main extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(detailTransaksiText, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1658,7 +1659,7 @@ public class main extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(detailTransaksiText, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jLabel14))
         );
@@ -2075,6 +2076,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbVarian;
     private javax.swing.JTextField dateTextField;
+    private javax.swing.JLabel detailTransaksiText;
     private tugas.FButton fAddButton;
     private tugas.FButton fBackButton;
     private tugas.FButton fButton2;
@@ -2110,7 +2112,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
