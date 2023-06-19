@@ -14,11 +14,11 @@ public class DataBarang {
     
     //List data barang
     String monitor[][] = {
-            {"ARM-22", "Armaggeddon Pixxel 22 inch Super FHD 75Hz", "1700000"},
-            {"AIRO-27", "AIRO AIO271G 27 inch IPS 165Hz", "2500000"},
-            {"MSI-24", "MSI OPTIX G2412 24 inch FHD 170Hz", "2750000"},
-            {"SNC-32", "Viewsonic VX3218 32 inch VA 165Hz", "3300000"},
-            {"SMG-32", "SAMSUNG S32AG550 32 inch VA 165Hz", "4870000"}};
+            {"ARM-22", "ARMAGEDDON PIXXEL 22 INCH SUPER FHD 75Hz", "1700000"},
+            {"AIRO-27", "AIRO AIO271G 27 INCH IPS 165Hz", "2500000"},
+            {"MSI-24", "MSI OPTIX G2412 24 INCH FHD 170Hz", "2750000"},
+            {"SNC-32", "Viewsonic VX3218 32 INCH VA 165Hz", "3300000"},
+            {"SMG-32", "SAMSUNG S32AG550 32 INCH VA 165Hz", "4870000"}};
     String keyboard[][] = {
             {"RXUS", "Rexus Daiva RX-D68SF", "689000"},
             {"RZER", "Razer BlackWidow V3 Tenkeyless", "1100000"},

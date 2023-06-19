@@ -27,17 +27,17 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
-
 public class main extends javax.swing.JFrame {
+
     LoadingScreen ls = new LoadingScreen();
     Dialog dialog = new Dialog();
     private Timer timer;
     private int progress;
     private boolean inBelanja = false;
     private boolean inRakit = false;
-    
+
     List<BarangDto> savedData = new ArrayList<>();
-    boolean cleanData=false;
+    boolean cleanData = false;
     DataBarang data = new DataBarang();
     String[][] monitor = data.monitor;
     String[][] keyboard = data.keyboard;
@@ -51,25 +51,25 @@ public class main extends javax.swing.JFrame {
     String[][] ssd = data.ssd;
     String[][] ram = data.ram;
     String[][] vga = data.vga;
-    
+
     double monitorPrice, keyboardPrice, mousePrice, motherboardPrice, casingPrice,
             psuPrice, cpuPrice, coolerPrice, hddPrice, ssdPrice, ramPrice, vgaPrice;
-    
+
     Locale localeID = new Locale("in", "ID");
     NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
     DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     LocalDateTime now = LocalDateTime.now();
-    
+
     Font sunny;
     Font nature;
     Font mouldy;
-    
+
     public main() {
         initComponents();
-        
+
         //Creating font
-        try{
+        try {
             sunny = Font.createFont(Font.TRUETYPE_FONT, new File("SunnyspellsRegular-MV9ze.ttf"));
             nature = Font.createFont(Font.TRUETYPE_FONT, new File("NatureBeautyPersonalUse-9Y2DK.ttf")).deriveFont(50f);
             mouldy = Font.createFont(Font.TRUETYPE_FONT, new File("MouldyCheeseRegular-WyMWG.ttf")).deriveFont(50f);
@@ -77,28 +77,28 @@ public class main extends javax.swing.JFrame {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("SunnyspellsRegular-MV9ze.ttf")));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("NatureBeautyPersonalUse-9Y2DK.ttf")));
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("MouldyCheeseRegular-WyMWG.ttf")));
-        }catch (IOException | FontFormatException e) {
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
-        
+
         //Applying font
         topLabel.setFont(sunny.deriveFont(55f));
         welcomeText.setFont(sunny.deriveFont(75f));
         afterWelcomeText.setFont(sunny.deriveFont(35f));
         rakitLabel.setFont(sunny.deriveFont(50f));
-        
+
         setVisiblePanel(true, false, false, false);
         uneditableTextField();
         dateTextField.setText(date.format(now).toString());
-        
+
         //Modif design tabel
         tableDetailProduct.setFont(new Font("Tahoma", Font.PLAIN, 13));
         tableDetailProduct.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tableDetailProduct.getTableHeader().setOpaque(false);
-        tableDetailProduct.getTableHeader().setBackground(new Color(216,216,245));
-        tableDetailProduct.getTableHeader().setForeground(new Color(255,255,255));
-        
-        timer = new Timer(80, new ActionListener(){
+        tableDetailProduct.getTableHeader().setBackground(new Color(216, 216, 245));
+        tableDetailProduct.getTableHeader().setForeground(new Color(255, 255, 255));
+
+        timer = new Timer(80, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (progress == 100) {
@@ -114,27 +114,27 @@ public class main extends javax.swing.JFrame {
                     progress++;
                     ls.jProgressBar.setValue(progress);
                 }
-            }       
+            }
         });
     }
-    
+
     //Set data pada dialog transaksi berhasil
-    public void setDialog(){
+    public void setDialog() {
         String id = UUID.randomUUID().toString();
         dialog.transactionID.setText(id);
         dialog.transactionTime.setText(dateTime.format(now).toString());
         totalPayment(dialog.amount);
-        
+
     }
- 
-    public void resetBelanjaPanel(){
+
+    public void resetBelanjaPanel() {
         cbVarian.setEnabled(false);
         clean(cbVarian, namaBarang, hargaBarang);
         jumlahBarangSpinner.setValue(1);
         jumlahBarangSpinner.setEnabled(false);
     }
-    
-    public void resetRakitPanel(){
+
+    public void resetRakitPanel() {
         clean(jCasingBox, namaCasing, hargaCasing);
         clean(jMonitorBox, namaMonitor, hargaMonitor);
         clean(jKeyboardBox, namaKeyboard, hargaKeyboard);
@@ -147,7 +147,7 @@ public class main extends javax.swing.JFrame {
         clean(jPSUBox, namaPSU, hargaPSU);
         clean(jCoolerBox, namaCooler, hargaCooler);
         clean(jVGABox, namaVGA, hargaVGA);
-        
+
         jSpinnerProcessor.setValue(1);
         jSpinnerMotherboard.setValue(1);
         jSpinnerSSD.setValue(1);
@@ -155,30 +155,31 @@ public class main extends javax.swing.JFrame {
         jSpinnerCooler.setValue(1);
         jSpinnerRAM.setValue(1);
     }
-    
-    public void backToHome(){
-        if(savedData.size()!=0){
+
+    public void backToHome() {
+        if (savedData.size() != 0) {
             int response = JOptionPane.showConfirmDialog(null, "Data barang yang telah ditambahkan akan direset", "WARNING", JOptionPane.OK_CANCEL_OPTION);
-            if(response==JOptionPane.OK_OPTION){
+            if (response == JOptionPane.OK_OPTION) {
                 savedData.clear();
                 setVisiblePanel(true, false, false, false);
             }
-        } else{
+        } else {
             setVisiblePanel(true, false, false, false);
         }
     }
-    
-    public void formatDateTime(){
+
+    public void formatDateTime() {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter dateTime = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime now = LocalDateTime.now();
     }
-    
+
     public void startProgress() {
         progress = 0;
         ls.jProgressBar.setValue(progress);
         timer.start();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,37 +187,37 @@ public class main extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     //Mengubah angka biasa ke format rupiah
-    public void setPrice(JSpinner product, JTextField price, double harga){
+    public void setPrice(JSpinner product, JTextField price, double harga) {
         int val = Integer.parseInt(product.getValue().toString());
         double total = val * harga;
         price.setText(formatRupiah.format(total));
     }
-    
+
     //Mengubah format rupiah ke format angka biasa
-    public String convertPrice(String rupiahFormat){
+    public String convertPrice(String rupiahFormat) {
         String replace1 = rupiahFormat.replace("Rp", "");
         String replace2 = replace1.replace(",00", "");
         String replace3 = replace2.replace(".", "");
         return replace3;
     }
-    
+
     //Menyimpan data barang yang telah ditambahkan
-    public void saveData(String name, String code, String varian, String price, String amount){
+    public void saveData(String name, String code, String varian, String price, String amount) {
         BarangDto item = new BarangDto(name, code, varian, price, amount);
         savedData.add(item);
     }
-    
+
     //Menambahkan data yang disimpan ke dalam tabel
-    public void addDataTable(){
-        DefaultTableModel model = (DefaultTableModel)tableDetailProduct.getModel();
+    public void addDataTable() {
+        DefaultTableModel model = (DefaultTableModel) tableDetailProduct.getModel();
         model.setRowCount(0);
-        for(BarangDto item: savedData){
+        for (BarangDto item : savedData) {
             String[] row = new String[5];
-                row[0] = item.getName();
-                row[1] = item.getCode();
-                row[2] = item.getProduct();
-                row[3] = item.getPrice();
-                row[4] = item.getAmount();
+            row[0] = item.getName();
+            row[1] = item.getCode();
+            row[2] = item.getProduct();
+            row[3] = item.getPrice();
+            row[4] = item.getAmount();
 
             model.addRow(row);
         }
@@ -227,112 +228,111 @@ public class main extends javax.swing.JFrame {
         tableDetailProduct.getColumnModel().getColumn(3).setPreferredWidth(85);
         tableDetailProduct.getColumnModel().getColumn(4).setPreferredWidth(50);
     }
-    
+
     //Menghitung total bayar
-    public void totalPayment(JTextField textField){
+    public void totalPayment(JTextField textField) {
         int total = 0;
         int price;
-        for(BarangDto item:savedData){
+        for (BarangDto item : savedData) {
             price = Integer.parseInt(convertPrice(item.getPrice())) * Integer.parseInt(item.getAmount());
             total += price;
         }
         textField.setText(formatRupiah.format(total));
     }
-    
 
     //Set text di text field
-    public void setData(JTextField name, JTextField price){
+    public void setData(JTextField name, JTextField price) {
         name.setText(data.getNamaVarian());
         price.setText(data.getHargaString());
-            
+
     }
-    
-    public void cleanItem(JTextField name, JTextField price){
+
+    public void cleanItem(JTextField name, JTextField price) {
         name.setText("");
         price.setText("");
     }
-    
+
     //Menampilkan data pada text field
-    public void setTextField(JComboBox product, JTextField name, JTextField price){
-        if(cleanData!=true){
-            if(product.getSelectedItem().toString()=="PILIH"){
-            cleanItem(name, price);
-        } else {
-            data.setKode(product.getSelectedItem().toString());
-            data.dataSelection();
-            setData(name, price);        
+    public void setTextField(JComboBox product, JTextField name, JTextField price) {
+        if (cleanData != true) {
+            if (product.getSelectedItem().toString() == "PILIH") {
+                cleanItem(name, price);
+            } else {
+                data.setKode(product.getSelectedItem().toString());
+                data.dataSelection();
+                setData(name, price);
+            }
         }
-        }
-        
+
     }
-    
+
     //Bug?
-    public void setTextFieldSpinner(JComboBox product, JTextField name, JTextField price, int val){
-        if(cleanData!=true){
-            if(product.getSelectedItem().toString()=="PILIH"){
-            cleanItem(name, price);
-        } else {
-            data.setKode(product.getSelectedItem().toString());
-            data.dataSelection();
-            setDataSpinner(name, price, val);        
+    public void setTextFieldSpinner(JComboBox product, JTextField name, JTextField price, int val) {
+        if (cleanData != true) {
+            if (product.getSelectedItem().toString() == "PILIH") {
+                cleanItem(name, price);
+            } else {
+                data.setKode(product.getSelectedItem().toString());
+                data.dataSelection();
+                setDataSpinner(name, price, val);
+            }
         }
-        }
-        
+
     }
-    
-    public void setDataSpinner(JTextField name, JTextField price, int val){
+
+    public void setDataSpinner(JTextField name, JTextField price, int val) {
         name.setText(data.getNamaVarian());
         double total = data.getHarga() * val;
         price.setText(formatRupiah.format(total));
     }
-    
+
     //Bug?
-    public void setChangedSpinner(JSpinner product, JComboBox productBox, JTextField name, JTextField price){
+    public void setChangedSpinner(JSpinner product, JComboBox productBox, JTextField name, JTextField price) {
         cleanItem(name, price);
         int val = Integer.parseInt(product.getValue().toString());
         setTextFieldSpinner(productBox, name, price, val);
     }
-    
-    public void addChoice(){   
+
+    public void addChoice() {
         String name = data.getNama();
         cbVarian.addItem("PILIH");
-        
-        if(name=="Monitor"){
+
+        if (name == "Monitor") {
             addVarianProduct(monitor);
-        } else if(name=="Keyboard"){
+        } else if (name == "Keyboard") {
             addVarianProduct(keyboard);
-        } else if(name=="Mouse"){
+        } else if (name == "Mouse") {
             addVarianProduct(mouse);
-        } else if(name=="Motherboard"){
+        } else if (name == "Motherboard") {
             addVarianProduct(motherboard);
-        } else if(name=="Casing"){
+        } else if (name == "Casing") {
             addVarianProduct(casing);
-        } else if(name=="RAM"){
+        } else if (name == "RAM") {
             addVarianProduct(ram);
-        } else if(name=="SSD"){
+        } else if (name == "SSD") {
             addVarianProduct(ssd);
-        } else if(name=="HDD"){
+        } else if (name == "HDD") {
             addVarianProduct(hdd);
-        } else if(name=="Cooler"){
+        } else if (name == "Cooler") {
             addVarianProduct(cooler);
-        } else if(name=="CPU"){
+        } else if (name == "CPU") {
             addVarianProduct(cpu);
-        } else if(name=="PSU"){
+        } else if (name == "PSU") {
             addVarianProduct(psu);
-        } else{
+        } else {
             addVarianProduct(vga);
-        }   
+        }
     }
-    
+
     //Menambahkan item pada combo box
-    public void addVarianProduct(String[][] product){
-        for(int i=0; i<product.length; i++){
+    public void addVarianProduct(String[][] product) {
+        for (int i = 0; i < product.length; i++) {
             cbVarian.addItem(product[i][0]);
         }
     }
-    
+
     //Menambahkan item pada seluruh combo box
-    public void addChoice2(){
+    public void addChoice2() {
         jCasingBox.addItem("PILIH");
         jMonitorBox.addItem("PILIH");
         jKeyboardBox.addItem("PILIH");
@@ -345,8 +345,8 @@ public class main extends javax.swing.JFrame {
         jCoolerBox.addItem("PILIH");
         jPSUBox.addItem("PILIH");
         jVGABox.addItem("PILIH");
-        
-        for(int i=0; i<5; i++){
+
+        for (int i = 0; i < 5; i++) {
             jMonitorBox.addItem(monitor[i][0]);
             jKeyboardBox.addItem(keyboard[i][0]);
             jCasingBox.addItem(casing[i][0]);
@@ -359,18 +359,18 @@ public class main extends javax.swing.JFrame {
             jCoolerBox.addItem(cooler[i][0]);
             jPSUBox.addItem(psu[i][0]);
             jVGABox.addItem(vga[i][0]);
-        }       
+        }
     }
-    
+
     //Mereset text field
-    public void clean(JComboBox box, JTextField name, JTextField price){
+    public void clean(JComboBox box, JTextField name, JTextField price) {
         box.removeAllItems();
         name.setText("");
         price.setText("");
     }
-    
+
     //Menonaktifkan atau mengaktifkan radio button   
-public void rbEnable(boolean choice){
+    public void rbEnable(boolean choice) {
         rbCPU.setEnabled(choice);
         rbCooler.setEnabled(choice);
         rbCasing.setEnabled(choice);
@@ -384,9 +384,9 @@ public void rbEnable(boolean choice){
         rbRAM.setEnabled(choice);
         rbVGA.setEnabled(choice);
     }
-    
+
     //Membuat text field tidak dapat diedit
-    public void uneditableTextField(){
+    public void uneditableTextField() {
         cbVarian.setEditable(false);
         dateTextField.setEditable(false);
         totalBayar.setEnabled(false);
@@ -415,16 +415,16 @@ public void rbEnable(boolean choice){
         namaVGA.setEditable(false);
         hargaVGA.setEditable(false);
         namaPSU.setEditable(false);
-        hargaPSU.setEditable(false);   
+        hargaPSU.setEditable(false);
     }
-    
-    public void setVisiblePanel(boolean home, boolean belanja, boolean rakit, boolean payment){
+
+    public void setVisiblePanel(boolean home, boolean belanja, boolean rakit, boolean payment) {
         pnlBeranda.setVisible(home);
         pnlBelanja.setVisible(belanja);
         pnlRakit.setVisible(rakit);
-        pnlPembayaran.setVisible(payment);    
+        pnlPembayaran.setVisible(payment);
     }
-        
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -432,13 +432,19 @@ public void rbEnable(boolean choice){
         Home = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         topLabel = new javax.swing.JLabel();
-        jClose2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jBeranda = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        pnlBeranda = new javax.swing.JPanel();
+        jRakitButton = new javax.swing.JButton();
+        jBelanjaButton = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        afterWelcomeText = new javax.swing.JLabel();
+        welcomeText = new javax.swing.JLabel();
         pnlBelanja = new javax.swing.JPanel();
         rbMonitor = new javax.swing.JRadioButton();
         rbKeyboard = new javax.swing.JRadioButton();
@@ -538,13 +544,6 @@ public void rbEnable(boolean choice){
         jLabel2 = new javax.swing.JLabel();
         dateTextField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        pnlBeranda = new javax.swing.JPanel();
-        jRakitButton = new javax.swing.JButton();
-        jBelanjaButton = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        afterWelcomeText = new javax.swing.JLabel();
-        welcomeText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -557,22 +556,11 @@ public void rbEnable(boolean choice){
 
         topLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         topLabel.setForeground(new java.awt.Color(51, 51, 51));
-        topLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/computer(1).png"))); // NOI18N
+        topLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Computer Menu.png"))); // NOI18N
         topLabel.setText("  TOKO KOMPUTER");
-        jPanel5.add(topLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, -1, 80));
+        jPanel5.add(topLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 380, 90));
 
-        jClose2.setForeground(new java.awt.Color(255, 255, 255));
-        jClose2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jClose2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8_close_window_30px.png"))); // NOI18N
-        jClose2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jClose2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jClose2MouseClicked(evt);
-            }
-        });
-        jPanel5.add(jClose2, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 0, 80, 80));
-
-        Home.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 940, 80));
+        Home.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, 940, 90));
 
         jPanel3.setBackground(new java.awt.Color(41, 54, 63));
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -620,22 +608,139 @@ public void rbEnable(boolean choice){
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 220, 60));
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 230, 60));
 
-        Home.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 217, 570));
+        Home.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 220, 550));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setPreferredSize(new java.awt.Dimension(723, 596));
         jPanel4.setLayout(new java.awt.CardLayout());
+
+        pnlBeranda.setBackground(new java.awt.Color(255, 255, 255));
+
+        jRakitButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jRakitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/mainboard.png"))); // NOI18N
+        jRakitButton.setText("Rakit Komputer");
+        jRakitButton.setBorder(null);
+        jRakitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jRakitButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jRakitButton.setInheritsPopupMenu(true);
+        jRakitButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jRakitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRakitButtonActionPerformed(evt);
+            }
+        });
+
+        jBelanjaButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jBelanjaButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pc-tower.png"))); // NOI18N
+        jBelanjaButton.setText("Belanja Komponen");
+        jBelanjaButton.setBorder(null);
+        jBelanjaButton.setBorderPainted(false);
+        jBelanjaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jBelanjaButton.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jBelanjaButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBelanjaButton.setInheritsPopupMenu(true);
+        jBelanjaButton.setPreferredSize(new java.awt.Dimension(145, 160));
+        jBelanjaButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jBelanjaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBelanjaButtonActionPerformed(evt);
+            }
+        });
+
+        jPanel6.setBackground(new java.awt.Color(41, 54, 63));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 96, Short.MAX_VALUE)
+        );
+
+        afterWelcomeText.setBackground(new java.awt.Color(204, 204, 204));
+        afterWelcomeText.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        afterWelcomeText.setForeground(new java.awt.Color(51, 51, 51));
+        afterWelcomeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        afterWelcomeText.setText("Silahkan pilih menu di bawah ini");
+
+        welcomeText.setBackground(new java.awt.Color(204, 204, 204));
+        welcomeText.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        welcomeText.setForeground(new java.awt.Color(51, 51, 51));
+        welcomeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        welcomeText.setText("Welcome!");
+
+        javax.swing.GroupLayout pnlBerandaLayout = new javax.swing.GroupLayout(pnlBeranda);
+        pnlBeranda.setLayout(pnlBerandaLayout);
+        pnlBerandaLayout.setHorizontalGroup(
+            pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBerandaLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBerandaLayout.createSequentialGroup()
+                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlBerandaLayout.createSequentialGroup()
+                        .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlBerandaLayout.createSequentialGroup()
+                                .addComponent(jBelanjaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(97, 97, 97)
+                                .addComponent(jRakitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(afterWelcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnlBerandaLayout.setVerticalGroup(
+            pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBerandaLayout.createSequentialGroup()
+                .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBerandaLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 358, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBerandaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(afterWelcomeText)
+                        .addGap(37, 37, 37)
+                        .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBelanjaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRakitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(90, 90, 90)))
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel4.add(pnlBeranda, "card3");
 
         pnlBelanja.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -823,122 +928,133 @@ public void rbEnable(boolean choice){
         pnlBelanjaLayout.setHorizontalGroup(
             pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBelanjaLayout.createSequentialGroup()
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbMonitor)
-                            .addComponent(rbMouse)
-                            .addComponent(rbRAM))
-                        .addGap(108, 108, 108)
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbPSU)
-                            .addComponent(rbKeyboard)
-                            .addComponent(rbHDD))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBelanjaLayout.createSequentialGroup()
-                                .addComponent(rbMotherboard)
-                                .addGap(102, 102, 102))
-                            .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbCPU)
-                                    .addComponent(rbSSD))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbCooler)
-                            .addComponent(rbCasing)
-                            .addComponent(rbVGA))
-                        .addContainerGap())
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(fAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(fPayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43))
-                            .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbVarian, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBelanjaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(rbMonitor)
+                .addGap(108, 108, 108)
+                .addComponent(rbKeyboard)
+                .addGap(99, 99, 99)
+                .addComponent(rbMotherboard)
+                .addGap(102, 102, 102)
+                .addComponent(rbCasing))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(rbMouse)
+                .addGap(116, 116, 116)
+                .addComponent(rbPSU)
+                .addGap(141, 141, 141)
+                .addComponent(rbCPU)
+                .addGap(168, 168, 168)
+                .addComponent(rbCooler))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(rbRAM)
+                .addGap(132, 132, 132)
+                .addComponent(rbHDD)
+                .addGap(137, 137, 137)
+                .addComponent(rbSSD)
+                .addGap(170, 170, 170)
+                .addComponent(rbVGA))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(540, 540, 540)
                 .addComponent(backButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGap(5, 5, 5)
+                .addComponent(fButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 709, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(cbVarian, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel3)
+                .addGap(10, 10, 10)
+                .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                .addGap(520, 520, 520)
+                .addComponent(fAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(fPayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlBelanjaLayout.setVerticalGroup(
             pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBelanjaLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbMonitor)
                     .addComponent(rbKeyboard)
                     .addComponent(rbMotherboard)
                     .addComponent(rbCasing))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(11, 11, 11)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbMouse)
                     .addComponent(rbPSU)
                     .addComponent(rbCPU)
                     .addComponent(rbCooler))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(6, 6, 6)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbRAM)
                     .addComponent(rbHDD)
                     .addComponent(rbSSD)
                     .addComponent(rbVGA))
-                .addGap(30, 30, 30)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(27, 27, 27)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(backButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbVarian, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fPayButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                            .addComponent(fAddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
-                        .addGap(614, 614, 614))
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel13))
+                    .addComponent(cbVarian, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlBelanjaLayout.createSequentialGroup()
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28)
-                            .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel3))
+                    .addComponent(namaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel28))
+                    .addComponent(hargaBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBelanjaLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1))
+                    .addComponent(jumlahBarangSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(137, 137, 137)
+                .addGroup(pnlBelanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fPayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel4.add(pnlBelanja, "card4");
 
+        pnlRakit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnlRakit.setPreferredSize(new java.awt.Dimension(719, 550));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel6.setText("Pilih Processor        :");
+        jLabel6.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel6.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel6.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jProcessorBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -949,7 +1065,10 @@ public void rbEnable(boolean choice){
         jLabel7.setText("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel8.setText("Pilih Motherboard  :");
+        jLabel8.setText("Pilih Motherboard   :");
+        jLabel8.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel8.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel8.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jMotherboardBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -962,8 +1081,15 @@ public void rbEnable(boolean choice){
 
         jSpinnerMotherboard.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
+        namaCasing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaCasingActionPerformed(evt);
+            }
+        });
+
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel9.setText("Pilih RAM                :");
+        jLabel9.setText("Pilih RAM                 :");
+        jLabel9.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jRAMBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -973,12 +1099,18 @@ public void rbEnable(boolean choice){
 
         jSpinnerRAM.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
+        namaMotherboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaMotherboardActionPerformed(evt);
+            }
+        });
+
         jLabel16.setText("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         jLabel17.setText("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel21.setText("Pilih Casing             :");
+        jLabel21.setText("Pilih Casing              :");
         jLabel21.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jCasingBox.addActionListener(new java.awt.event.ActionListener() {
@@ -988,7 +1120,7 @@ public void rbEnable(boolean choice){
         });
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel23.setText("Pilih Monitor           :");
+        jLabel23.setText("Pilih Monitor            :");
         jLabel23.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jMonitorBox.addActionListener(new java.awt.event.ActionListener() {
@@ -1004,7 +1136,7 @@ public void rbEnable(boolean choice){
         });
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel24.setText("Pilih Keyboard       :");
+        jLabel24.setText("Pilih Keyboard         :");
         jLabel24.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jKeyboardBox.addActionListener(new java.awt.event.ActionListener() {
@@ -1014,9 +1146,7 @@ public void rbEnable(boolean choice){
         });
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel25.setText("Pilih Mouse             :");
-        jLabel25.setMaximumSize(new java.awt.Dimension(102, 14));
-        jLabel25.setMinimumSize(new java.awt.Dimension(102, 14));
+        jLabel25.setText("Pilih Mouse              :");
         jLabel25.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jMouseBox.addActionListener(new java.awt.event.ActionListener() {
@@ -1026,16 +1156,28 @@ public void rbEnable(boolean choice){
         });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel15.setText("Pilih VGA                   :");
+        jLabel15.setText("Pilih VGA                 :");
+        jLabel15.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel15.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel15.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel18.setText("Pilih SSD                   :");
+        jLabel18.setText("Pilih SSD                  :");
+        jLabel18.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel18.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel18.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel19.setText("Pilih HDD                  :");
+        jLabel19.setText("Pilih HDD                 :");
+        jLabel19.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel19.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel19.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel20.setText("Pilih PSU                   :");
+        jLabel20.setText("Pilih PSU                  :");
+        jLabel20.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel20.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel20.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jVGABox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1061,12 +1203,21 @@ public void rbEnable(boolean choice){
             }
         });
 
+        namaRAM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namaRAMActionPerformed(evt);
+            }
+        });
+
         jSpinnerSSD.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         jSpinnerHDD.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel26.setText("Pilih Cooler FAN      :");
+        jLabel26.setMaximumSize(new java.awt.Dimension(132, 16));
+        jLabel26.setMinimumSize(new java.awt.Dimension(132, 16));
+        jLabel26.setPreferredSize(new java.awt.Dimension(102, 14));
 
         jCoolerBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1075,6 +1226,18 @@ public void rbEnable(boolean choice){
         });
 
         jSpinnerCooler.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
+        hargaCasing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargaCasingActionPerformed(evt);
+            }
+        });
+
+        hargaMonitor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hargaMonitorActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(357, 80));
@@ -1093,7 +1256,7 @@ public void rbEnable(boolean choice){
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rakitLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+            .addComponent(rakitLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
         );
 
         fBackButton.setText("Back");
@@ -1116,235 +1279,293 @@ public void rbEnable(boolean choice){
         pnlRakit.setLayout(pnlRakitLayout);
         pnlRakitLayout.setHorizontalGroup(
             pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1102, Short.MAX_VALUE)
             .addGroup(pnlRakitLayout.createSequentialGroup()
                 .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRakitLayout.createSequentialGroup()
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 1092, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jCasingBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jMonitorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jKeyboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jMouseBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jProcessorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(namaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jMotherboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(namaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRAMBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSpinnerRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(namaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hargaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jSSDBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jSpinnerSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jHDDBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jSpinnerHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(hargaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jPSUBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(hargaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jVGABox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(namaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(hargaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(4, 4, 4)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jPSUBox, 0, 144, Short.MAX_VALUE)
-                                            .addComponent(jVGABox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                                .addGap(225, 225, 225)
-                                                .addComponent(fBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(10, 10, 10)
-                                                .addComponent(fNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRakitLayout.createSequentialGroup()
-                                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(namaVGA)
-                                                    .addComponent(namaPSU))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(hargaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(hargaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addComponent(jCoolerBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jSpinnerCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8)
-                                        .addComponent(namaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(hargaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(6, 6, 6)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSSDBox, 0, 143, Short.MAX_VALUE)
-                                    .addComponent(jHDDBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSpinnerSSD)
-                                    .addComponent(jSpinnerHDD))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(namaSSD, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                                    .addComponent(namaHDD))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(hargaSSD, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                    .addComponent(hargaHDD)))
-                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addComponent(jRAMBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinnerRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(namaRAM))
-                                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                                .addComponent(jMotherboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jSpinnerMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(namaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                                .addComponent(jProcessorBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jSpinnerProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(namaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hargaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hargaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hargaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnlRakitLayout.createSequentialGroup()
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                    .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addComponent(jMouseBox, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlRakitLayout.createSequentialGroup()
-                                            .addGap(9, 9, 9)
-                                            .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jMonitorBox, 0, 141, Short.MAX_VALUE)
-                                                .addComponent(jCasingBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addGroup(pnlRakitLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jKeyboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(namaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(namaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(namaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(namaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hargaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hargaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hargaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(hargaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 762, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlRakitLayout.createSequentialGroup()
+                                .addComponent(fBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlRakitLayout.createSequentialGroup()
+                                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jCoolerBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jSpinnerCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(namaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(hargaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlRakitLayout.setVerticalGroup(
             pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRakitLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jCasingBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(namaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(hargaCasing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jMonitorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(namaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(hargaMonitor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jKeyboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(namaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hargaKeyboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jMouseBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(namaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(hargaMouse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(2, 2, 2)
                 .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRakitLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlRakitLayout.createSequentialGroup()
-                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jProcessorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(namaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hargaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jMotherboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(namaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hargaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jRAMBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jSSDBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(namaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jHDDBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(hargaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(namaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jSpinnerCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel26)
-                        .addComponent(jCoolerBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jSpinnerProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jProcessorBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(namaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hargaProcessor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinnerMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jMotherboardBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(namaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hargaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jSpinnerRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRAMBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(namaRAM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hargaMotherboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSSDBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jSpinnerSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(namaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(hargaSSD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jHDDBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hargaHDD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCoolerBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jSpinnerCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(namaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hargaCooler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPSUBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(namaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(hargaPSU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(6, 6, 6)
+                .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jVGABox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(namaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hargaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(namaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRakitLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(hargaVGA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(pnlRakitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(fNextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         jPanel4.add(pnlRakit, "card3");
@@ -1417,7 +1638,7 @@ public void rbEnable(boolean choice){
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1440,7 +1661,7 @@ public void rbEnable(boolean choice){
                 .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1450,8 +1671,9 @@ public void rbEnable(boolean choice){
                                 .addComponent(totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPembayaranLayout.createSequentialGroup()
                                 .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)))))
                 .addContainerGap())
         );
         pnlPembayaranLayout.setVerticalGroup(
@@ -1464,132 +1686,16 @@ public void rbEnable(boolean choice){
                 .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(totalBayar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addGroup(pnlPembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
+                .addContainerGap())
         );
 
         jPanel4.add(pnlPembayaran, "card3");
 
-        pnlBeranda.setBackground(new java.awt.Color(255, 255, 255));
-
-        jRakitButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jRakitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/mainboard.png"))); // NOI18N
-        jRakitButton.setText("Rakit Komputer");
-        jRakitButton.setBorder(null);
-        jRakitButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jRakitButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRakitButton.setInheritsPopupMenu(true);
-        jRakitButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jRakitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRakitButtonActionPerformed(evt);
-            }
-        });
-
-        jBelanjaButton.setBackground(new java.awt.Color(204, 255, 255));
-        jBelanjaButton.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jBelanjaButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pc-tower.png"))); // NOI18N
-        jBelanjaButton.setText("Belanja Komponen");
-        jBelanjaButton.setBorder(null);
-        jBelanjaButton.setBorderPainted(false);
-        jBelanjaButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jBelanjaButton.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        jBelanjaButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jBelanjaButton.setInheritsPopupMenu(true);
-        jBelanjaButton.setPreferredSize(new java.awt.Dimension(145, 160));
-        jBelanjaButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jBelanjaButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBelanjaButtonActionPerformed(evt);
-            }
-        });
-
-        jPanel6.setBackground(new java.awt.Color(41, 54, 63));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 54, Short.MAX_VALUE)
-        );
-
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 75, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
-        );
-
-        afterWelcomeText.setBackground(new java.awt.Color(204, 204, 204));
-        afterWelcomeText.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        afterWelcomeText.setForeground(new java.awt.Color(51, 51, 51));
-        afterWelcomeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        afterWelcomeText.setText("Silahkan pilih menu di bawah ini");
-
-        welcomeText.setBackground(new java.awt.Color(204, 204, 204));
-        welcomeText.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        welcomeText.setForeground(new java.awt.Color(51, 51, 51));
-        welcomeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        welcomeText.setText("Welcome!");
-
-        javax.swing.GroupLayout pnlBerandaLayout = new javax.swing.GroupLayout(pnlBeranda);
-        pnlBeranda.setLayout(pnlBerandaLayout);
-        pnlBerandaLayout.setHorizontalGroup(
-            pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBerandaLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBerandaLayout.createSequentialGroup()
-                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlBerandaLayout.createSequentialGroup()
-                        .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlBerandaLayout.createSequentialGroup()
-                                .addComponent(jBelanjaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(97, 97, 97)
-                                .addComponent(jRakitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(afterWelcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnlBerandaLayout.setVerticalGroup(
-            pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBerandaLayout.createSequentialGroup()
-                .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlBerandaLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE))
-                    .addGroup(pnlBerandaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(afterWelcomeText)
-                        .addGap(37, 37, 37)
-                        .addGroup(pnlBerandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBelanjaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRakitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(98, 98, 98)))
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        jPanel4.add(pnlBeranda, "card3");
-
-        Home.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(216, 86, 723, 570));
+        Home.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 723, 550));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1599,7 +1705,7 @@ public void rbEnable(boolean choice){
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Home, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -1648,35 +1754,31 @@ public void rbEnable(boolean choice){
 
     private void rbPSUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPSUActionPerformed
         data.setNama("PSU");
-        
+
     }//GEN-LAST:event_rbPSUActionPerformed
 
     private void cbVarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbVarianActionPerformed
-        if(cleanData!=true){
+        if (cleanData != true) {
             jumlahBarangSpinner.setValue(1);
             setTextField(cbVarian, namaBarang, hargaBarang);
         }
     }//GEN-LAST:event_cbVarianActionPerformed
 
-    private void jClose2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jClose2MouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_jClose2MouseClicked
-
     private void jBerandaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBerandaMousePressed
         backToHome();
         cleanData = true;
         fButton2.setEnabled(true);
-        if(inBelanja==true){
+        if (inBelanja == true) {
             cleanData = true;
             clean(cbVarian, hargaBarang, namaBarang);
             rbEnable(true);
             jumlahBarangSpinner.setValue(1);
             inBelanja = false;
         }
-        if(inRakit==true){
+        if (inRakit == true) {
             resetRakitPanel();
             inRakit = false;
-        }        
+        }
     }//GEN-LAST:event_jBerandaMousePressed
 
     private void jCoolerBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCoolerBoxActionPerformed
@@ -1745,7 +1847,7 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_jProcessorBoxActionPerformed
 
     private void jBelanjaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBelanjaButtonActionPerformed
-        setVisiblePanel(false,true,false,false);
+        setVisiblePanel(false, true, false, false);
         jumlahBarangSpinner.setEnabled(false);
         cbVarian.setEnabled(false);
         fAddButton.setEnabled(false);
@@ -1753,7 +1855,7 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_jBelanjaButtonActionPerformed
 
     private void jRakitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRakitButtonActionPerformed
-        setVisiblePanel(false,false,true,false);
+        setVisiblePanel(false, false, true, false);
         addChoice2();
         inRakit = true;
         cleanData = false;
@@ -1765,15 +1867,15 @@ public void rbEnable(boolean choice){
         clean(cbVarian, hargaBarang, namaBarang);
         rbEnable(true);
         jumlahBarangSpinner.setValue(1);
-            
+
         fAddButton.setEnabled(false);
         buttonGroup1.clearSelection();
     }//GEN-LAST:event_backButton2ActionPerformed
 
     private void fPayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fPayButtonActionPerformed
-        if(savedData.size()==0){
+        if (savedData.size() == 0) {
             JOptionPane.showMessageDialog(null, "Anda belum menambahkan barang", "WARNING", JOptionPane.OK_OPTION);
-        } else{
+        } else {
             setVisiblePanel(false, false, false, true);
             totalPayment(totalBayar);
             addDataTable();
@@ -1781,9 +1883,9 @@ public void rbEnable(boolean choice){
     }//GEN-LAST:event_fPayButtonActionPerformed
 
     private void fAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fAddButtonActionPerformed
-        if(cbVarian.getSelectedItem().toString()=="PILIH"){
+        if (cbVarian.getSelectedItem().toString() == "PILIH") {
             JOptionPane.showMessageDialog(null, "Varian Belum Dipilih", "WARNING", JOptionPane.OK_OPTION);
-        } else{
+        } else {
             saveData(data.getNama(), cbVarian.getSelectedItem().toString(), namaBarang.getText().toString(), hargaBarang.getText().toString(), jumlahBarangSpinner.getValue().toString());
             cleanData = true;
             clean(cbVarian, hargaBarang, namaBarang);
@@ -1791,7 +1893,7 @@ public void rbEnable(boolean choice){
             jumlahBarangSpinner.setValue(1);
             jumlahBarangSpinner.setEnabled(false);
             cbVarian.setEnabled(false);
-            
+
             fAddButton.setEnabled(false);
         }
     }//GEN-LAST:event_fAddButtonActionPerformed
@@ -1799,7 +1901,7 @@ public void rbEnable(boolean choice){
     private void fBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fBackButtonActionPerformed
         backToHome();
         cleanData = true;
-        if(inRakit==true){
+        if (inRakit == true) {
             resetRakitPanel();
         }
     }//GEN-LAST:event_fBackButtonActionPerformed
@@ -1817,10 +1919,10 @@ public void rbEnable(boolean choice){
         String coolerSelected = jCoolerBox.getSelectedItem().toString();
         String psuSelected = jPSUBox.getSelectedItem().toString();
         String vgaSelected = jVGABox.getSelectedItem().toString();
-        if(casingSelected=="PILIH" || monitorSelected=="PILIH" || keyboardSelected=="PILIH" ||
-                mouseSelected=="PILIH" || cpuSelected=="PILIH" || motherboardSelected=="PILIH" ||
-                ramSelected=="PILIH" || ssdSelected=="PILIH" || hddSelected=="PILIH" ||
-                coolerSelected=="PILIH" || psuSelected=="PILIH" || vgaSelected=="PILIH"){
+        if (casingSelected == "PILIH" || monitorSelected == "PILIH" || keyboardSelected == "PILIH"
+                || mouseSelected == "PILIH" || cpuSelected == "PILIH" || motherboardSelected == "PILIH"
+                || ramSelected == "PILIH" || ssdSelected == "PILIH" || hddSelected == "PILIH"
+                || coolerSelected == "PILIH" || psuSelected == "PILIH" || vgaSelected == "PILIH") {
             JOptionPane.showMessageDialog(null, "Data masih kosong", "WARNING", JOptionPane.OK_OPTION);
         } else {
             saveData("Casing", casingSelected, namaCasing.getText(), hargaCasing.getText(), "1");
@@ -1835,12 +1937,12 @@ public void rbEnable(boolean choice){
             saveData("Cooler", coolerSelected, namaCooler.getText(), hargaCooler.getText(), jSpinnerCooler.getValue().toString());
             saveData("PSU", psuSelected, namaPSU.getText(), hargaPSU.getText(), "1");
             saveData("VGA", vgaSelected, namaVGA.getText(), hargaVGA.getText(), "1");
-            
+
             addDataTable();
             totalPayment(totalBayar);
             cleanData = true;
             resetRakitPanel();
-            setVisiblePanel(false, false, false, true);            
+            setVisiblePanel(false, false, false, true);
         }
     }//GEN-LAST:event_fNextButtonActionPerformed
 
@@ -1854,30 +1956,50 @@ public void rbEnable(boolean choice){
 
     private void fCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fCancelButtonActionPerformed
         backToHome();
-        
+
         fButton2.setEnabled(true);
         fCancelButton.setText("Cancel");
     }//GEN-LAST:event_fCancelButtonActionPerformed
 
     private void fButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fButton5ActionPerformed
-        if(buttonGroup1.getSelection()==null){
+        if (buttonGroup1.getSelection() == null) {
             JOptionPane.showMessageDialog(null, "Anda Belum Memilih Komponen", "WARNING", JOptionPane.OK_OPTION);
-        } else{
+        } else {
             inBelanja = true;
             buttonGroup1.clearSelection();
-            cleanData=false;
+            cleanData = false;
             addChoice();
             rbEnable(false);
             cbVarian.setEnabled(true);
             jumlahBarangSpinner.setEnabled(true);
             fAddButton.setEnabled(true);
-            fPayButton.setEnabled(true);  
+            fPayButton.setEnabled(true);
         }
     }//GEN-LAST:event_fButton5ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void namaCasingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaCasingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaCasingActionPerformed
+
+    private void hargaCasingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaCasingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargaCasingActionPerformed
+
+    private void hargaMonitorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaMonitorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hargaMonitorActionPerformed
+
+    private void namaRAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaRAMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaRAMActionPerformed
+
+    private void namaMotherboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaMotherboardActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_namaMotherboardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1888,16 +2010,16 @@ public void rbEnable(boolean choice){
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
-        try{
+
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(UnsupportedLookAndFeelException ignore) {
+        } catch (UnsupportedLookAndFeelException ignore) {
             Toolkit.getDefaultToolkit().beep();
-        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException ex){
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             ex.printStackTrace();
             return;
         }
-        
+
 //        try {
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //                if ("Nimbus".equals(info.getName())) {
@@ -1954,7 +2076,6 @@ public void rbEnable(boolean choice){
     private javax.swing.JButton jBelanjaButton;
     javax.swing.JPanel jBeranda;
     private javax.swing.JComboBox<String> jCasingBox;
-    javax.swing.JLabel jClose2;
     private javax.swing.JComboBox<String> jCoolerBox;
     private javax.swing.JComboBox<String> jHDDBox;
     private javax.swing.JComboBox<String> jKeyboardBox;
