@@ -35,7 +35,8 @@ public class main extends javax.swing.JFrame {
     private int progress;
     private boolean inBelanja = false;
     private boolean inRakit = false;
-
+    int xx,xy;
+    
     List<BarangDto> savedData = new ArrayList<>();
     boolean cleanData = false;
     DataBarang data = new DataBarang();
@@ -552,6 +553,16 @@ public class main extends javax.swing.JFrame {
         Home.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel5.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel5MouseDragged(evt);
+            }
+        });
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel5MousePressed(evt);
+            }
+        });
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         topLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -2000,6 +2011,17 @@ public class main extends javax.swing.JFrame {
     private void namaMotherboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaMotherboardActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_namaMotherboardActionPerformed
+
+    private void jPanel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel5MousePressed
+
+    private void jPanel5MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel5MouseDragged
 
     /**
      * @param args the command line arguments
